@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/inicio.css">
+</head>
+
+<body>
+
+
+
+    <h1>Super Mercado Colonia Tovar</h1>
+    </header>
+    <main>
+        <h2>Productos</h2>
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+                <th>Agregar</th>
+            </tr>
+            <tr>
+                <td>Harina</td>
+                <td><input type="number" id="manzanas-qty" value="1" min="1"></td>
+                <td>$2.50</td>
+                <td><img src="imagenes/img-3.jpg.jpeg" alt="Harina" class="product-image"></td>
+                <td><button class="btn"
+                        onclick="addToCart('Harina', parseFloat(2.50), parseInt(document.getElementById('manzanas-qty').value))">Agregar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Arroz</td>
+                <td><input type="number" id="leche-qty" value="1" min="1"></td>
+                <td>$3.99</td>
+                <td><img src="imagenes/img-1.jpg.jpeg" alt="Arroz" class="product-image"></td>
+                <td><button class="btn"
+                        onclick="addToCart('Arroz', parseFloat(3.99), parseInt(document.getElementById('leche-qty').value))">Agregar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Pasta</td>
+                <td><input type="number" id="papel-higienico-qty" value="1" min="1"></td>
+                <td>$1.25</td>
+                <td><img src="imagenes/img-2.jpg.jpeg" alt="Pasta" class="product-image"></td>
+                <td><button class="btn"
+                        onclick="addToCart('Pasta', parseFloat(1.25), parseInt(document.getElementById('papel-higienico-qty').value))">Agregar</button>
+                </td>
+            </tr>
+        </table>
+
+        <h2>Carrito</h2>
+        <table id="cart-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody id="cart-body">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Total:</td>
+                    <td id="total-price">$0.00</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button class="btn" onclick="checkout()">Finalizar Compra</button>
+    </main>
+
+    <script>
+        let cart = [];
+
+        function addToCart(product, price, quantity) {
+            if (quantity > 0) {
+                cart.push({ product, price, quantity });
+                updateCart();
+            } else {
+                alert("La cantidad debe ser mayor a 0.");
+            }
+        }
+
+        function updateCart() {
+            let cartBody = document.getElementById("cart-body");
+            let totalPrice = 0;
+
+            cartBody.innerHTML = "";
+
+            for (let i = 0; i < cart.length; i++) {
+                let item = cart[i];
+                let row = document.createElement("tr");
+
+                let productCell = document.createElement("td");
+                productCell.textContent = item.product;
+                row.appendChild(productCell);
+
+                let quantityCell = document.createElement("td");
+                quantityCell.textContent = item.quantity;
+                row.appendChild(quantityCell);
+
+                let priceCell = document.createElement("td");
+                priceCell.textContent = "$" + item.price.toFixed(2);
+                row.appendChild(priceCell);
+
+                let totalCell = document.createElement("td");
+                let total = item.price * item.quantity;
+                totalCell.textContent = "$" + total.toFixed(2);
+                row.appendChild(totalCell);
+
+                let deleteCell = document.createElement("td");
+                let deleteButton = document.createElement("button");
+                deleteButton.className = "btn";
+                deleteButton.textContent = "Eliminar";
+                deleteButton.onclick = function () {
+                    removeFromCart(i);
+                };
+                deleteCell.appendChild(deleteButton);
+                row.appendChild(deleteCell);
+
+                cartBody.appendChild(row);
+                totalPrice += total;
+            }
+
+            document.getElementById("total-price").textContent = "$" + totalPrice.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function checkout() {
+            if (cart.length > 0) {
+                alert("¡Gracias por su compra!");
+                cart = [];
+                updateCart();
+            } else {
+                alert("El carrito está vacío. ¡No hay nada que comprar!");
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>

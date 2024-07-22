@@ -1,0 +1,60 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: #0072C6;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+  }
+  h2 {
+    font-size: 24px;
+    margin-top: 30px;
+  }
+  main {
+    padding: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  .total {
+    text-align: right;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  button {
+    background-color: #0072C6;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }

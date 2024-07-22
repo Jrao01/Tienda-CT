@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> <%= title %> </title>
+    <link rel="stylesheet" href="styles/carrito.css">
+</head>
+<body>
+    
+  <header>
+    <h1>Super Mercado Colonia Tovar</h1>
+    <p>Carrito de Compras</p>
+  </header>
+
+  <main>
+    <h2>Productos en el Carrito</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Manzanas</td>
+          <td>2</td>
+          <td>$2.50</td>
+          <td>$5.00</td>
+          <td><button>Eliminar</button></td>
+        </tr>
+        <tr>
+          <td>Leche</td>
+          <td>1</td>
+          <td>$3.99</td>
+          <td>$3.99</td>
+          <td><button>Eliminar</button></td>
+        </tr>
+        <tr>
+          <td>Papel Higiénico</td>
+          <td>4</td>
+          <td>$1.25</td>
+          <td>$5.00</td>
+          <td><button>Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total">
+      <h2>Total: $14.99</h2>
+    </div>
+
+    <button>Finalizar Compra</button>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Super Mercado Colonia Tovar. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
