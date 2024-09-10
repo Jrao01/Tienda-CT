@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>productos</title>
+    <style>
+        img {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav><input type="search" class="input" id="buscador"></nav>
+    </header>
+
+
+    <a href="agregarProd">
+        <lord-icon src="https://cdn.lordicon.com/hqymfzvj.json" trigger="hover"
+            style="display:flex;flex-direction:row;width:auto;height:50px">agregar
+            producto
+        </lord-icon>
+    </a>
+
+
+
+    <table>
+
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>foto</td>
+                <td>nombre</td>
+                <td>categoria</td>
+                <td>Unidades Disponibles</td>
+                <td>editar</td>
+                <td>Habilitar/Deshabilitar</td>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <%productos.forEach(prod=>{%>
+
+                <tr>
+                    <td>
+                        <%=prod.id%>
+                    </td>
+                    <td>
+                        <img src="<%=prod.imagen%>" alt="imagen">
+                    </td>
+                    <td>
+                        <%=prod.nombre%>
+                    </td>
+                    <td>
+                        <%=prod.category.categoria%>
+                    </td>
+                    <td>
+                        <%=prod.Unidades%>
+                    </td>
+                    <td>
+                        <a href="/admin/editarProd/<%=prod.id%>">
+
+                            <lord-icon src="https://cdn.lordicon.com/wuvorxbv.json" trigger="hover"
+                                colors="primary:#121331,secondary:#c7c116" style="width:50px;height:50px">
+                            </lord-icon>
+                        </a>
+                    </td>
+                    <td>
+                        <%if(prod.status == 'habilitado'){%>
+                        <a href="/admin/disableProd/<%=prod.id%>">
+                            <lord-icon src="https://cdn.lordicon.com/pyzlgcfb.json" trigger="hover" stroke="bold"
+                                state="loop-cycle" colors="primary:#16c72e,secondary:#e83a30"
+                                style="width:50px;height:50px">
+                            </lord-icon>
+                        </a><%}else{%>
+                            
+                            <a href="/admin/enableProd/<%=prod.id%>">
+                                <lord-icon src="https://cdn.lordicon.com/pyzlgcfb.json" trigger="hover" stroke="bold"
+                                    state="loop-cycle" colors="primary:#e83a30,secondary:#16c72e"
+                                    style="width:50px;height:50px">
+                                </lord-icon>
+
+                        <%}%>
+                    </td>
+                </tr>
+
+                <%})%>
+        </tbody>
+
+    </table>
+
+
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+</body>
+
+</html>

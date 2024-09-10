@@ -13,24 +13,69 @@
 
 
     <h1>Super Mercado Colonia Tovar</h1>
+    
+    
+    <h2>Productos</h2>
+    <header>
+        <nav><input type="search" class="input" id="buscador" placeholder="Busca un producto"></nav>
     </header>
+
+    <aside class="filtros">
+
+        <section>
+            <h2>Filtrar por Categoria</h2>
+            <%categorias.forEach(cate=>{%>
+            <label for="<%=cate.categoria%>">
+                <%=cate.categoria%>
+                <input type="radio" class="radio" name="filtro" value="<%=cate.categoria%>" style="background-color: brown;height: 50px;width: 50px;">
+            </label>
+            <%})%>
+        </section>
+
+    </aside>
+
     <main>
-        <h2>Productos</h2>
-        <table>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Imagen</th>
-                <th>Agregar</th>
-            </tr>
+
+
+        <%productos.forEach(prod=>{%>
+
+            <section class="prod" id="<%=prod.nombre%>">
+
+                <div class="ProdImg" > 
+                    <div>
+
+                        <p>Unidades <br> Disponibles: <br> <%=prod.Unidades%></p>
+                        <div><img src="<%=prod.imagen%>" ></div>
+                        <p> <%=prod.category.categoria%> </p>
+                    </div>
+
+                </div>
+                <div class="infoProd">
+
+                    <p> <%=prod.nombre%> </p>
+                    <p> <%=prod.descripcion%> </p>
+                    <p>Precio: $<%=prod.precio%>  BS: <%=prod.precio*BCV%></p>
+                    <p>precio dolar BCV: <%=BCV%></p>
+                    <!---<p>precio dolar Paralelo: <%=PARALEL%></p>---->
+                </div>
+
+                <div class="aggCarrito"><button>agregar al carrito</button></div>
+            </section>
+
+            <%})%>
+
+
+                <!----
+            
+            
+            
             <tr>
                 <td>Harina</td>
                 <td><input type="number" id="manzanas-qty" value="1" min="1"></td>
                 <td>$2.50</td>
                 <td><img src="imagenes/img-3.jpg.jpeg" alt="Harina" class="product-image"></td>
                 <td><button class="btn"
-                        onclick="addToCart('Harina', parseFloat(2.50), parseInt(document.getElementById('manzanas-qty').value))">Agregar</button>
+                    onclick="addToCart('Harina', parseFloat(2.50), parseInt(document.getElementById('manzanas-qty').value))">Agregar</button>
                 </td>
             </tr>
             <tr>
@@ -39,7 +84,7 @@
                 <td>$3.99</td>
                 <td><img src="imagenes/img-1.jpg.jpeg" alt="Arroz" class="product-image"></td>
                 <td><button class="btn"
-                        onclick="addToCart('Arroz', parseFloat(3.99), parseInt(document.getElementById('leche-qty').value))">Agregar</button>
+                    onclick="addToCart('Arroz', parseFloat(3.99), parseInt(document.getElementById('leche-qty').value))">Agregar</button>
                 </td>
             </tr>
             <tr>
@@ -73,9 +118,15 @@
                     <td></td>
                 </tr>
             </tfoot>
-        </table>
+            -->
+                </table>
+                <!---
         <button class="btn" onclick="checkout()">Finalizar Compra</button>
+        -->
     </main>
+
+    <script src="scripts/buscador.js"></script>
+    <script src="scripts/filtro.js"></script>
 
     <script>
         let cart = [];

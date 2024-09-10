@@ -1,3 +1,8 @@
+    *{
+        box-sizing: border-box;
+        padding: 0px;
+        margin: 0px;
+    }
     /* Estilos generales */
     body {
         font-family: 'Roboto', sans-serif;
@@ -22,11 +27,15 @@
 
     /* Estilos del contenido principal */
     main {
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap;
         max-width: 1200px;
         margin: 40px auto;
         padding: 20px;
         background-color: #fff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        gap: 16px;
     }
 
     /* Estilos de la tabla de productos */
@@ -98,4 +107,87 @@
             width: 80px;
             height: 80px;
         }
+    }
+
+/*-----------------------*/
+
+    section{
+        text-align: center;
+    }
+
+    .prod{
+        display: grid;
+        grid-template-areas:  'foto'
+                    'info'
+                    'button';
+        height: 40vh;
+        grid-template-rows: 40% 45% 15%;
+        width: 20vw;
+        min-width: 160px;
+        border-radius: 10px;
+        border: solid 2px black;
+
+    }
+
+    .ProdImg{
+        display: grid;
+        grid-area: foto;
+        background-size: cover;
+        background-position: center;
+        
+    }
+
+    .ProdImg div{
+        display: flex;
+        justify-content: space-between;
+        
+    }
+
+    .img{
+        height: 40%;
+    }
+
+    .ProdImg div div{
+        height: 100px;
+        width: 100px;
+    }
+
+
+    .ProdImg p{
+        width: 25%;
+        font-size: 8px;
+        height: fit-content;
+        border-bottom: solid green 1px;
+        color: green;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .ProdImg p:nth-child(1){
+        border-radius: 4px;
+        border-right: solid green 1px;
+    }
+
+    .ProdImg p:last-child{
+        border-left: solid green 1px;
+        border-radius: 4px;
+    }
+
+    .infoProd{
+        display: grid;
+        grid-area: info;
+    }
+
+    .aggCarrito{
+        display: grid;
+        grid-area: button;
+    }
+
+    .aggCarrito button{
+        border: none;
+        background-color: transparent;
+    }
+
+    .filtro{
+        display: none;
     }

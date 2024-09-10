@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> <%= title %> </title>
     <link rel="stylesheet" href="styles/carrito.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <style>
+    #map{height:200px};
+  </style>
 </head>
 <body>
     
   <header>
     <h1>Super Mercado Colonia Tovar</h1>
-    <p>Carrito de Compras</p>
+    <p>Carrito de Compras</p> 
   </header>
 
   <main>
@@ -50,6 +55,10 @@
       </tbody>
     </table>
 
+    <div id="map" ></div>
+    
+  <p>La distancia entre tu ubicación y el punto marcado es: <span id="distance"></span> metros</p>
+
     <div class="total">
       <h2>Total: $14.99</h2>
     </div>
@@ -60,5 +69,31 @@
   <footer>
     <p>&copy; 2024 Super Mercado Colonia Tovar. Todos los derechos reservados.</p>
   </footer>
+
+  <script>
+    // Inicializar el mapa
+    var map = L.map('map').setView([40.4167, -3.7033], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Marcar un punto específico
+    var marker = L.marker([40.4167, -3.7033]).addTo(map);
+
+
+    // Obtener la ubicación del usuario y calcular la distancia
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        let userPosition = L.latLng(position.coords.latitude, position.coords.longitude);
+        let marker2 = L.marker(userPosition).addTo(map);
+        let markerPosition = marker.getLatLng();
+        let distance = userPosition.distanceTo(markerPosition);
+
+        document.getElementById('distance').textContent = distance.toFixed(2);
+      });
+    } else {
+      document.getElementById('distance').textContent = 'No se puede obtener la ubicación del usuario.';
+    }
+  </script>
 </body>
 </html>

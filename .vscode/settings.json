@@ -1,0 +1,8 @@
+{
+    "activitusbar.alignment": "Right",
+    "activitusbar.combineWorkspaceSettings": true,
+    "activitusbar.toggleSidebar": false,
+    "workbench.activityBar.location": "default",
+    "zenMode.hideActivityBar": true,
+    "thunder-client.sidebar.showActivityFromCollection": false
+}

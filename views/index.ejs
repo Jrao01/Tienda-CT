@@ -10,17 +10,16 @@
         </style>
 </head>
 <body>
-
-    <h2>ingrese sus datos  </h2>
-
-    <form action="sendData" method="post">
-
-        <fieldset>
-        <legend> Creacion de usuario </legend>
-            
-        <label for="nombre"> Nombre Completo </label>
-        <input  name="nombre" id="nombre" class="input" required placeholder="Juan Paredes"  type="text" >
+    
+    <form action="/sendData" method="post">
         
+        <div id="titleL">
+
+            <h1>Login</h1>
+        </div>
+
+        
+
         <label for="email">Correo</label>
         <input  name="email" id="email" class="input" required placeholder="JuanP123@gmail.com"  type="email">
             
@@ -28,29 +27,16 @@
         
         <input  name="password" id="password" class="input" required placeholder="*********"  minlength="6" maxlength="10"  type="password">
 
-        <label for="Repassword">confirme su contraseña </label>
-        <input  name="Repassword" id="Repassword" class="input" required placeholder="*********"  minlength="6" maxlength="10"  type="password">
+        <p>¿Olvidó su contraseña? haga click <a href="#">aquí</a>  </p>
+        <p> <a href="/registro">registrate</>  </p>
+
+        <button >iniciar Sesión</button>
 
 
-        <button >crear Usuario</button>
-        <input type="reset">
 
-
-        </fieldset>
 
     </form>
 
-    <div id="GenContainer">
-        <h2> generador de contraseñas</h2>
-        <button onclick="generar()" >generar</button>
-        <span id="generatedPassword"></span>
-        <button id="utilizar" onclick="utilizarP()" >utilizar contraseña</button>
-    </div>
-  
 
-
-
-
-<script src="scripts/index.js"></script>
 </body>
 </html>
