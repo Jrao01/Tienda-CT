@@ -178,7 +178,7 @@
         grid-area: info;
     }
 
-    .aggCarrito{
+    .seeDetails{
         display: grid;
         grid-area: button;
     }

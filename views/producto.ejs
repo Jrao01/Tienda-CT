@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%=title%>
+    </title>
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+
+    <main>
+
+        <section>
+            <article>
+                <img src="<%=prod.imagen%>" alt="foto del Producto" title="<%=prod.nombre%>">
+                
+                <h1><%=prod.nombre%></h1>
+
+                <p id="categoria%"><%=prod.category.categoria%></p>
+
+                <p id="descripcion"><%=prod.descripcion%></p>
+
+                <p id="precios">$<%=prod.precio%> BS.<%=prod.precio*BCV%></p>
+
+
+
+                <%if(Basket.findIndex(obj => obj.id == prod.id) < 0){%>
+
+                    <form action="/addToBasket/<%=prod.id%>" method="post">
+
+                        <input type="number" name="cant" id="cantidad" value="1" min="1" max="<%=prod.Unidades%>">
+
+                        <button style="background-color:rgba(0,0,0,0);border: none;">
+
+                            <lord-icon src="https://cdn.lordicon.com/taymdfsf.json" trigger="morph" stroke="bold"
+                                state="morph-fill" colors="primary:#110a5c,secondary:#e8e230"
+                                style="width:50px;height:50px">
+                            </lord-icon>
+
+                        </button>
+
+                    </form>
+                    
+                    <%}else{%>
+                        <form action="/removeFromBasket/<%=prod.id%>/<%=Basket.findIndex(obj => obj.id == prod.id)%>" method="post">
+                            <button style="background-color:rgba(0,0,0,0);border: none;">
+                                <lord-icon src="https://cdn.lordicon.com/drxwpfop.json" trigger="morph" stroke="bold"
+                                    state="morph-trash-in" colors="primary:#110a5c,secondary:#e8e230"
+                                    style="width:50px;height:50px">
+                                </lord-icon>
+                            </button>
+                        </form>
+
+
+                        <%}%>
+
+                            <%if( DoneWL.includes(prod.id)){%>
+
+                                <form action="/removeFromWhishList/<%=prod.id%>" method="post">
+
+                                    <button style="background-color:rgba(0,0,0,0);border: none;">
+                                        <lord-icon src="https://cdn.lordicon.com/jjoolpwc.json" trigger="morph"
+                                            stroke="bold" state="morph-cross" colors="primary:#110a5c,secondary:#e8e230"
+                                            style="width:50px;height:50px">
+                                        </lord-icon>
+                                    </button>
+
+                                </form>
+
+                                <%}else{%>
+
+                                    <form action="/addToWhishList/<%=prod.id%>" method="post">
+
+                                        <button style="background-color:rgba(0,0,0,0);border: none;">
+                                            <lord-icon src="https://cdn.lordicon.com/jjoolpwc.json" trigger="morph"
+                                                stroke="bold" state="morph-glitter"
+                                                colors="primary:#e8e230,secondary:#110a5c"
+                                                style="width:50px;height:50px">
+                                            </lord-icon>
+                                        </button>
+
+                                    </form>
+
+                                    <%}%>
+
+            </article>
+
+        </section>
+
+        <section id="relatedProds"> <!-- esto debe ser un carrusel de productos -->
+
+            <%prods.forEach(rprod=>{%>
+                <%if(rprod.id !==prod.id){%>
+                    <a href="/producto/<%=rprod.id%>">
+                        <article class="Rprod" style="height: 200px;"> <!-- crear carta pequena con esto -->
+                            <img class="Rimage" src="<%=rprod.imagen%>" title="<%rprod.nombre%>"
+                                style="height: 150px;aspect-ratio: .75;">
+                            <h3>
+                                <%rprod.nombre%>
+                            </h3>
+                            <p>$<%=rprod.precio%> / BS. <%=rprod.precio*BCV%>
+                            </p>
+
+                        </article>
+                    </a>
+                    <%}%>
+                        <%})%>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>designed and coded by = {Coding JAR}</p>
+
+    </footer>
+
+
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+</body>
+
+</html>

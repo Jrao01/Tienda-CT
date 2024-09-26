@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-    
+
   <header>
     <h1>Super Mercado Colonia Tovar</h1>
     <p>Carrito de Compras</p> 
@@ -25,33 +25,31 @@
         <tr>
           <th>Producto</th>
           <th>Cantidad</th>
-          <th>Precio</th>
+          <th>Precio/U</th>
           <th>Total</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
+
+        
+    <%let cont = 0%>
+    <%Prods.forEach(prod=>{%>
+
+        <%if(Basket.some(item => item.id == prod.id)){%>
+            <%cont = cont + 1%>
+
         <tr>
-          <td>Manzanas</td>
-          <td>2</td>
-          <td>$2.50</td>
-          <td>$5.00</td>
+            <td><%=prod.nombre%></td>
+          <td><%=Basket[cont].cantidad%></td>
+          <td>$<%=prod.precio%> <br> Bs <%=prod.precio*BCV%> </td>
+          <td>$<%=prod.precio*Basket[cont].cantidad%> <br> <%=prod.precio*Basket[cont].cantidad*BCV%>  </td>
           <td><button>Eliminar</button></td>
         </tr>
-        <tr>
-          <td>Leche</td>
-          <td>1</td>
-          <td>$3.99</td>
-          <td>$3.99</td>
-          <td><button>Eliminar</button></td>
-        </tr>
-        <tr>
-          <td>Papel Higiénico</td>
-          <td>4</td>
-          <td>$1.25</td>
-          <td>$5.00</td>
-          <td><button>Eliminar</button></td>
-        </tr>
+      
+        <%}%>
+      <%})%>
+
       </tbody>
     </table>
 

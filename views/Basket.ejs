@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de compras</title>
+    <link rel="stylesheet" href="styles/inicio.css">
+</head>
+
+<body>
+
+    <main>
+    <%let index%>
+    <%Prods.forEach(prod=>{%>
+
+        <% index = Basket.indexOf(prod.id)%>
+        <%if(index > -1){%>
+            
+            <section class="prod" id="<%=prod.nombre%>">
+
+                <div class="ProdImg">
+                    <div>
+
+                        <p>cantidad<br>
+                            <%=Basket[index].cantidad%>
+                        </p>
+                        <div><img src="<%=prod.imagen%>"></div>
+                        <p>
+                            <%=prod.category.categoria%>
+                        </p>
+                    </div>
+
+                </div>
+                <div class="infoProd">
+
+                    <p>
+                        <%=prod.nombre%>
+                    </p>
+                    <!---   <p> <%=prod.descripcion%> </p>-->
+                    <p>Precio: $<%=prod.precio%>
+                </div>
+
+                <div class="seeDetails"><a href="/producto/<%=prod.id%>">ver producto</a></div>
+            </section>
+
+        <%}%>
+
+    <%})%>
+</main>
+</body>
+
+</html>

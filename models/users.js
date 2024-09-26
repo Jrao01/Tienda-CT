@@ -6,13 +6,21 @@ class User extends Model {
         return super.init(
             {
                 id: {
-                    type: DataTypes.INTEGER.UNSIGNED,
+                    type: DataTypes.INTEGER,
                     autoIncrement: true,
                     primaryKey: true,
                 },
                 nombre: {
                     type: DataTypes.STRING,
                     allowNull: false,
+                },
+                WhishList: {
+                    type: DataTypes.ARRAY(DataTypes.INTEGER),
+                    defaultValue: [0],
+                },
+                Basket: {
+                    type: DataTypes.ARRAY(DataTypes.JSONB),
+                    defaultValue: [{"id": "0", "cantidad": "0"}], 
                 },
                 correo: {
                     type: DataTypes.STRING,
@@ -33,5 +41,4 @@ class User extends Model {
 
 User.init(sequelize, DataTypes);
 
-// Puedes usar el modelo User para realizar operaciones con la base de datos
 module.exports = User;

@@ -16,7 +16,6 @@ async function getDolarPrice() {
 
     do {
 
-
         c = c + 1;
 
         const browser = await puppeteer.launch({
@@ -71,7 +70,7 @@ async function getDolarPrice() {
                 const data = dolarElements[1].textContent;
                 const rawNumber = data.split(' ');
                 const number = parseFloat(rawNumber[1].replace(",", "."));
-                return number;
+                return number.toFixed(2);
             });
 
             if (finalN < 36 || !finalN || finalN == 0 ) {

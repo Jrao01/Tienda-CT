@@ -53,13 +53,13 @@
                 <div class="infoProd">
 
                     <p> <%=prod.nombre%> </p>
-                    <p> <%=prod.descripcion%> </p>
-                    <p>Precio: $<%=prod.precio%>  BS: <%=prod.precio*BCV%></p>
-                    <p>precio dolar BCV: <%=BCV%></p>
+                   <!---   <p> <%=prod.descripcion%> </p>-->
+                    <p>Precio: $<%=prod.precio%> <!-- BS: <%=prod.precio*BCV%>--></p>
+                    <!---  <p>precio dolar BCV: <%=BCV%></p> -->
                     <!---<p>precio dolar Paralelo: <%=PARALEL%></p>---->
                 </div>
 
-                <div class="aggCarrito"><button>agregar al carrito</button></div>
+                <div class="seeDetails"><a href="/producto/<%=prod.id%>">ver producto</a></div>
             </section>
 
             <%})%>

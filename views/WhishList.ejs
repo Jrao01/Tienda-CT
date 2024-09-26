@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de deseos</title>
+    <link rel="stylesheet" href="styles/inicio.css">
+</head>
+
+<body>
+
+    <main>
+
+    <%Prods.forEach(prod=>{%>
+
+        <%if(WP.includes(prod.id)){%>
+
+            <section class="prod" id="<%=prod.nombre%>">
+
+                <div class="ProdImg">
+                    <div>
+
+                        <p>Unidades <br> Disponibles: <br>
+                            <%=prod.Unidades%>
+                        </p>
+                        <div><img src="<%=prod.imagen%>"></div>
+                        <p>
+                            <%=prod.category.categoria%>
+                        </p>
+                    </div>
+
+                </div>
+                <div class="infoProd">
+
+                    <p>
+                        <%=prod.nombre%>
+                    </p>
+                    <!---   <p> <%=prod.descripcion%> </p>-->
+                    <p>Precio: $<%=prod.precio%>
+                </div>
+
+                <div class="seeDetails"><a href="/producto/<%=prod.id%>">ver producto</a></div>
+            </section>
+
+        <%}%>
+
+    <%})%>
+</main>
+</body>
+
+</html>

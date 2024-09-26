@@ -6,7 +6,7 @@ class Productos extends Model {
         return super.init(
             {
                 id: {
-                    type: DataTypes.INTEGER.UNSIGNED,
+                    type: DataTypes.INTEGER,
                     autoIncrement: true,
                     primaryKey: true
                 },
@@ -24,7 +24,7 @@ class Productos extends Model {
                     allowNull: false
                 },
                 Unidades: {
-                    type: DataTypes.INTEGER.UNSIGNED,
+                    type: DataTypes.INTEGER,
                     allowNull: false 
                 },
                 descripcion: {
@@ -32,7 +32,7 @@ class Productos extends Model {
                     allowNull: false
                 },
                 categoria: {
-                    type: DataTypes.INTEGER.UNSIGNED,
+                    type: DataTypes.INTEGER,
                     allowNull: false
                 },
                 status:{

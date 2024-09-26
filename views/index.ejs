@@ -28,9 +28,13 @@
         <input  name="password" id="password" class="input" required placeholder="*********"  minlength="6" maxlength="10"  type="password">
 
         <p>¿Olvidó su contraseña? haga click <a href="#">aquí</a>  </p>
-        <p> <a href="/registro">registrate</>  </p>
+        <p> <a href="/registro">registrate</>  </a> </p>
 
         <button >iniciar Sesión</button>
+
+        <%if(fail == true){%>
+            <span> upss, usuario no encontrado </span>
+            <%}%>
 
 
 
