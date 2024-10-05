@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <style>
-    #map{height:200px};
+    #map{height:400px; aspect-ratio: 9 / 16};
   </style>
 </head>
 <body>
@@ -70,13 +70,13 @@
 
   <script>
     // Inicializar el mapa
-    var map = L.map('map').setView([40.4167, -3.7033], 13);
+    var map = L.map('map').setView([10.407704, -67.285374], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     // Marcar un punto específico
-    var marker = L.marker([40.4167, -3.7033]).addTo(map);
+    var marker = L.marker([10.407704, -67.285374]).addTo(map);
 
 
     // Obtener la ubicación del usuario y calcular la distancia
