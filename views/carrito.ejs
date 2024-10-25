@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> <%= title %> </title>
-    <link rel="stylesheet" href="styles/carrito.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="styles/carrito.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <style>
-    #map{height:400px; aspect-ratio: 9 / 16};
+    #map {
+      height: 400px;
+      aspect-ratio: 9 / 16
+    }
+
+    ;
   </style>
 </head>
+
 <body>
 
   <header>
     <h1>Super Mercado Colonia Tovar</h1>
-    <p>Carrito de Compras</p> 
+    <p>Carrito de Compras</p>
   </header>
 
   <main>
@@ -32,36 +41,49 @@
       </thead>
       <tbody>
 
-        
-    <%let cont = 0%>
-    <%Prods.forEach(prod=>{%>
 
-        <%if(Basket.some(item => item.id == prod.id)){%>
-            <%cont = cont + 1%>
+        <%let cont=0%>
+          <%Prods.forEach(prod=>{%>
 
-        <tr>
-            <td><%=prod.nombre%></td>
-          <td><%=Basket[cont].cantidad%></td>
-          <td>$<%=prod.precio%> <br> Bs <%=prod.precio*BCV%> </td>
-          <td>$<%=prod.precio*Basket[cont].cantidad%> <br> <%=prod.precio*Basket[cont].cantidad*BCV%>  </td>
-          <td><button>Eliminar</button></td>
-        </tr>
-      
-        <%}%>
-      <%})%>
+            <%if(Basket.some(item=> item.id == prod.id)){%>
+              <%cont=cont + 1%>
+
+                <tr>
+                  <td>
+                    <%=prod.nombre%>
+                  </td>
+                  <td>
+                    <%=Basket[cont].cantidad%>
+                  </td>
+                  <td>$<%=prod.precio%> <br> Bs <%=prod.precio*BCV%>
+                  </td>
+                  <td>$<%=prod.precio*Basket[cont].cantidad%> <br> BS<%=prod.precio*Basket[cont].cantidad*BCV%>
+                  </td>
+                  <td><button>Eliminar</button></td>
+                </tr>
+
+                <%}%>
+                  <%})%>
 
       </tbody>
     </table>
 
-    <div id="map" ></div>
     
-  <p>La distancia entre tu ubicación y el punto marcado es: <span id="distance"></span> metros</p>
+        <div class="total">
+          <h2></h2>
+        </div>
+        <div id="map"></div>
 
-    <div class="total">
-      <h2>Total: $14.99</h2>
-    </div>
+        <p>La distancia entre tu ubicación y nuestre sucursal es: <span id="distance"></span> metros aproximadamente</p>
 
-    <button>Finalizar Compra</button>
+    <form action="/comprado" method="post">
+      <textarea required minlength="25" maxlength="80" name="direccion" id="input" "cols="10" rows="5" autofocus style="resize: none;" placeholder="calle Paez cruce con av Margarita, casa nro 2 amarilla"></textarea>
+
+      <%if(interruptor==true){%>
+
+          <button>Finalizar Compra</button>
+        </form>
+      <%}%>
   </main>
 
   <footer>
@@ -81,7 +103,7 @@
 
     // Obtener la ubicación del usuario y calcular la distancia
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
+      navigator.geolocation.getCurrentPosition(function (position) {
         let userPosition = L.latLng(position.coords.latitude, position.coords.longitude);
         let marker2 = L.marker(userPosition).addTo(map);
         let markerPosition = marker.getLatLng();
@@ -94,4 +116,5 @@
     }
   </script>
 </body>
+
 </html>

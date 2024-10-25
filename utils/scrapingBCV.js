@@ -27,12 +27,11 @@ async function getDolarPrice() {
             timeout: 3600000
         });
 
-        setTimeout(()=>{console.log('waiting some ms')},3000)
-        await page.click('.v-switch__thumb');
+        await page.locator('.v-switch__thumb').click('.v-switch__thumb');
         console.log('cambiando a precio BCV');
         let bcv = await ScrapBCV(page);
 
-        await page.click('.v-switch__thumb');
+        await page.locator('.v-switch__thumb').click();
         console.log('cambiando a precio paralelo');
         let paralelo = await ScrapBCV(page);
 

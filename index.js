@@ -4,7 +4,8 @@ const createError = require('http-errors');
 const path = require('path')
 require('dotenv').config();
 const app = express();
-//const {getDolarPrice} = require('./utils/scrapingBCV'); 
+const {whatsapp} = require('./utils/whatsapp')
+
 
 const logger = require('morgan');
 
@@ -28,10 +29,12 @@ app.use('/',userRouter);
 app.use('/',adminRouter);
 
 
+
+
 //setInterval(getDolarPrice, 43200000 );// actualiza el precio del dolar cada 12H
 
 
-
+whatsapp.initialize();
 
 sequelize
     .authenticate()
@@ -54,7 +57,6 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-
 
 
 app.listen(port, () => {

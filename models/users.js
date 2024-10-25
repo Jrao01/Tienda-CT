@@ -20,7 +20,11 @@ class User extends Model {
                 },
                 Basket: {
                     type: DataTypes.ARRAY(DataTypes.JSONB),
-                    defaultValue: [{"id": "0", "cantidad": "0"}], 
+                    defaultValue: [{"id": "0","nombre":"" ,"cantidad": "0", "precio":"0"}], 
+                },
+                tel: {
+                    type: DataTypes.STRING,
+                    allowNull: false, 
                 },
                 correo: {
                     type: DataTypes.STRING,

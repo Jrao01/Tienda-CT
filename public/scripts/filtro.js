@@ -12,11 +12,7 @@ radios.forEach((radio) => {
             cates = valor//
             console.log(cates)
 
-        } /*else {
-            /*const deleteC = event.target.value.toLowerCase()
-            cates = cates.filter(cate => cate !== deleteC)
-            console.log(cates)
-        }*/
+        }
         
         
         document.querySelectorAll('.prod').forEach(prod => {

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const{ addUserPost, getProductos, userGetProductos , getCarrito, removeFromBasket ,getWhishlist , removeFromWhish ,dataPost, addToWhish,addToBasket } = require('../controllers/userControllers');
+const{ addUserPost, getProductos, userGetProductos , getCarrito, removeFromBasket ,
+        getWhishlist , removeFromWhish ,dataPost, addToWhish,addToBasket, comprado } = require('../controllers/userControllers');
 const validateToken = require('../middlewares/verify.js');
 
 
@@ -18,7 +19,7 @@ router.get('/registro', (req,res)=>{
 
 router.get('/WhishList', getWhishlist);
 router.get('/carrito', getCarrito);
-router.get('/producto/:id', userGetProductos)
+router.get('/producto/:id/', userGetProductos)
 router.get('/inicio', validateToken, getProductos);
 
 
@@ -27,11 +28,12 @@ router.get('/inicio', validateToken, getProductos);
 
 router.post('/sendData', dataPost);
 router.post('/createUser', addUserPost );
+router.post('/comprado',comprado)
 
 router.post('/addToWhishList/:id', addToWhish);
 router.post('/removeFromWhishList/:id', removeFromWhish);
-router.post('/addToBasket/:id', addToBasket);
-router.post('/removeFromBasket/:id/:cant', removeFromBasket);
+router.post('/addToBasket/:id/:nombre/:precio', addToBasket);
+router.post('/removeFromBasket/:id/:bId/:nombre/:precio', removeFromBasket);
 
 
 module.exports = router;

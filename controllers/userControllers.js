@@ -2,10 +2,12 @@ const User = require('../models/users');
 // Definición de los modelos
 const Producto = require('../models/productos');
 const Categoria = require('../models/categorias');
+const Facturas = require('../models/facturas')
 const jwt = require('jsonwebtoken');
 const Cookies = require('js-cookie');
 const { getBCV, getPARALEL } = require('../utils/scrapingBCV');
 const Sequelize = require('sequelize');
+const { whatsapp } = require('../utils/whatsapp');
 
 let NewPayload
 let accessToken
@@ -135,17 +137,26 @@ const getCarrito = async (req, res) => {
                 model: Categoria,
                 as: 'category'
             }]
-        })
-        const user = await User.findOne({ where: { id: Uid } })
+        });
+        
+        const categorias = await Categoria.findAll();
+        const user = await User.findOne({ where: { id: Uid } });
+        console.log(categorias);
 
-        /*let id = user.id;
-        let nombre = user.nombre;
-        let correo = user.correo;*/
+        let interruptor = false;
         let WhishList = user.WhishList;
         let Basket = user.Basket;
-        let title = 'carrito de compras'
-        let BCV = getBCV()
-        res.render('carrito',{WhishList,Basket,Prods,title,BCV})
+        
+        console.log('-----------existen items para comprar?----------'); 
+        console.log(Basket.find(item => item.id> 0 ));
+        if(Basket.find(item => item.id> 0 )){
+            interruptor = true;
+        };
+        console.log('-----------existen items para comprar?----------');
+
+        let title = 'carrito de compras';
+        let BCV = getBCV();
+        res.render('carrito',{WhishList,Basket,Prods,categorias,title,BCV,interruptor});
 
     } catch (error){
         console.error(error);
@@ -193,15 +204,14 @@ const dataPost = async (req, res) => {
 
 const addUserPost = async (req, res) => {
     try {
-        const { nombre, email, contrasena } = req.body;
-        await User.create({ nombre, correo: email, contrasena });
+        const { nombre, email, contrasena, tel} = req.body;
+        await User.create({ nombre, tel, correo: email, contrasena});
         res.redirect('/');
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500).send('error en el servidor');
     }
 };
-
 
 
 const addToWhish = async (req, res) => {
@@ -327,12 +337,17 @@ const addToBasket = async (req, res) => {
 
         const idp = req.params.id;
         console.log('idp  ', idp);
+        const nom = req.params.nombre;
+        console.log('nombre prod  ', nom);
         const { cant } = req.body
         console.log('cant ', cant);
+        const prec = req.params.precio
 
         const Wprod = {
             id: idp,
-            cantidad: cant
+            nombre: nom,
+            cantidad: cant,
+            precio: prec
         }
 
         
@@ -387,19 +402,25 @@ const removeFromBasket = async (req,res)=>{
 
     try{
         const idp = req.params.id;
-        const cant = req.params.cant;
+        const bId = req.params.bId;
+        const nom = req.params.nombre;
+        const precio = req.params.precio;
+        console.log(bId)
         const tkn = req.cookies['accessToken'];
 
         const decodedtkn = jwt.verify(tkn, process.env.SECRETKEY)
 
         let uid = decodedtkn.id;
+        let cant = decodedtkn.Basket[bId].cantidad
         console.log('--------------------------------------------------------')
         console.log(uid)
         console.log('--------------------------------------------------------')
 
         const Bp = {
             id: idp,
-            cantidad : cant
+            nombre: nom,
+            cantidad : cant,
+            precio
         }
 
         console.log(`bp : ${Bp}`)
@@ -446,10 +467,90 @@ const removeFromBasket = async (req,res)=>{
 
 }
 
+const comprado = async (req,res)=>{
+    try{
+        let BCV = await getBCV()
+        let {direccion} = req.body
+
+        const tkn = req.cookies['accessToken'];
+        const decodedtkn = jwt.verify(tkn, process.env.SECRETKEY);
+        const id = decodedtkn.id;
+        const prods = decodedtkn.Basket;
+
+        console.log('---------------------------');
+        console.log(id);
+        console.log('---------------------------');
+        console.log(prods);
+        console.log('---------------------------');
+        
+        const ids = prods.map(prod => prod.id);
+        
+        //console.log(`ids--> ${ids}`);
+        //const prodsComprados = await Producto.findAll({where:{[Op.in]:ids}});
+        const rawtel = await User.findOne({where:{id}});
+        const tel ="+"+ rawtel.tel;
+        console.log(tel);
+
+        let msjProd = '';
+
+        let cantidades = prods.map(prod=> prod.cantidad)
+        console.log('-----cantidades-------')
+        console.log(cantidades)
+        console.log('------------');
+
+        let metodo = 'Efectivo al recibir'
+        let Parsedcant = cantidades.map(num=> parseFloat(num) );
+        let canTotal = Parsedcant.reduce((a,v)=> a + v,0);
+        console.log(canTotal)
+        
+        let totalCash = 0;
+        let totalBs   = 0
+        prods.forEach(prod=>{
+            if (prod.precio > 0){   
+                let precio = parseFloat(prod.precio);
+                console.log('--precio-->',precio);
+                let cantidad= parseInt(prod.cantidad);
+                console.log('--cantidad-->',cantidad);
+                let sum = precio*cantidad;
+                msjProd += prod.cantidad+') '+prod.nombre+' --> *'+prod.precio+'* $ o *'+prod.precio*BCV+'* BS\n';
+                totalCash = totalCash + precio*cantidad;
+            }
+            console.log(totalCash)
+        });
+        totalBs = totalCash*BCV
+
+        console.log(msjProd)
+
+        const chatId = tel.substring(1) + "@c.us";
+        const number_details = await whatsapp.getNumberId(chatId);
+
+        if(number_details){
+            const mensaje=
+        `----- *Compra realizada* ----\n\n`+
+        `productos: \n${msjProd}\n`+
+        `cantidad total: *${canTotal}* productos \n\n`+
+        `---------------------------------------------------------------------\n`+
+        `cantidad total a Cancelar *${totalCash}* $ o *${totalBs}* \n`+
+        `Metodo de pago: ${metodo}\n`+
+        `---------------------------------------------------------------------\n`+
+        `direccion: ${direccion}`;
+            await whatsapp.sendMessage(chatId,mensaje);
+
+            //await Facturas.create({factura: mensaje,userId: id });
+
+            res.redirect('/inicio')
+        }else(
+            res.json({res:false})
+        )
+
+    }catch(error){
+        console.log(error);
+        res.status(500).send('error al enviar datos de compra')
+    }
+}
 
 
-
-
+// --------------------------- otros  ------------------------------------//
 
 async function generateAccesToken(UserData) {
     try {
@@ -471,5 +572,6 @@ module.exports = {
     dataPost,
     addToWhish,
     addToBasket,
-    removeFromBasket
+    removeFromBasket,
+    comprado
 };

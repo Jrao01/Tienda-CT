@@ -33,7 +33,7 @@
 
                 <%if(Basket.findIndex(obj => obj.id == prod.id) < 0){%>
 
-                    <form action="/addToBasket/<%=prod.id%>" method="post">
+                    <form action="/addToBasket/<%=prod.id%>/<%=prod.nombre%>/<%=prod.precio%>" method="post">
 
                         <input type="number" name="cant" id="cantidad" value="1" min="1" max="<%=prod.Unidades%>">
 
@@ -49,7 +49,7 @@
                     </form>
                     
                     <%}else{%>
-                        <form action="/removeFromBasket/<%=prod.id%>/<%=Basket.findIndex(obj => obj.id == prod.id)%>" method="post">
+                        <form action="/removeFromBasket/<%=prod.id%>/<%=Basket.findIndex(obj => obj.id == prod.id)%>/<%=prod.nombre%>/<%=prod.precio%>" method="post">
                             <button style="background-color:rgba(0,0,0,0);border: none;">
                                 <lord-icon src="https://cdn.lordicon.com/drxwpfop.json" trigger="morph" stroke="bold"
                                     state="morph-trash-in" colors="primary:#110a5c,secondary:#e8e230"
